@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:news_app_c12_online_sun/core/utils/assets_manager.dart';
 import 'package:news_app_c12_online_sun/core/utils/colors_manager.dart';
+import 'package:news_app_c12_online_sun/data_model/category_DM.dart';
 import 'package:news_app_c12_online_sun/presentation/screens/home/home_drawer/home_drawer.dart';
 import 'package:news_app_c12_online_sun/presentation/screens/home/tabs/categories/categories.dart';
+import 'package:news_app_c12_online_sun/presentation/screens/home/tabs/category_details/category_details.dart';
 import 'package:news_app_c12_online_sun/presentation/screens/home/tabs/settings/settings.dart';
 
 class Home extends StatefulWidget {
@@ -13,8 +15,13 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  Widget selectedWidget = Categories();
-
+   late Widget selectedWidget ;
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    selectedWidget =Categories(oncategoryclicked:onCategoryItemClicked ,);
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,25 +40,19 @@ class _HomeState extends State<Home> {
       ),
     );
   }
+  void onCategoryItemClicked (CategoryDM categoryDM){
+    selectedWidget =CategoryDetails(categoryDM: categoryDM);
 
-  // void onMenuItemClicked(int pos){
-  //   Navigator.pop(context);
-  //   if(pos == HomeDrawer.categories){
-  //     selectedWidget = Categories();
-  //   }else if(pos == HomeDrawer.settings){
-  //     selectedWidget = Settings();
-  //   }else{
-  //
-  //   }
-  //   setState(() {
-  //
-  //   });
-  // }
+    setState(() {
+
+    });
+
+  }
 
   void onMenuItemClicked(MenuItem item) {
     switch (item) {
       case MenuItem.categories:
-        selectedWidget = Categories();
+        selectedWidget = Categories(oncategoryclicked:onCategoryItemClicked ,);
       case MenuItem.settings:
         selectedWidget = Settings();
     }

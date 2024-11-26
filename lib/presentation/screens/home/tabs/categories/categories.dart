@@ -4,8 +4,12 @@ import 'package:news_app_c12_online_sun/config/theme/app_styles.dart';
 import 'package:news_app_c12_online_sun/data_model/category_DM.dart';
 import 'package:news_app_c12_online_sun/presentation/screens/home/tabs/categories/widgets/category_widget.dart';
 
+typedef OnCategoryClicked = void Function(CategoryDM);
+
 class Categories extends StatelessWidget {
-  Categories({super.key});
+  Categories({super.key, required this.oncategoryclicked});
+
+  OnCategoryClicked oncategoryclicked;
 
   List<CategoryDM> categoriesList = CategoryDM.getCategoriesList();
 
@@ -14,7 +18,9 @@ class Categories extends StatelessWidget {
     return Padding(
       padding: REdgeInsets.all(8.0),
       child: Column(
-        children: [
+        children: [IconButton(onPressed: (){
+          TextFormField(onTap: () => Text('hgfpe'),);
+        }, icon: Icon(Icons.search)),
           Text(
             'Pick your category\nof interest',
             style: AppStyles.picCategory,
@@ -25,8 +31,13 @@ class Categories extends StatelessWidget {
                 crossAxisCount: 2,
                 crossAxisSpacing: 25.w,
                 mainAxisSpacing: 20.h),
-            itemBuilder: (context, index) =>
-                CategoryWidget(categoryDM: categoriesList[index], index: index),
+            itemBuilder: (context, index) => InkWell(
+                onTap: () {
+                  oncategoryclicked(categoriesList[index]);
+                },
+                child: CategoryWidget(
+
+                    categoryDM: categoriesList[index], index: index)),
             itemCount: categoriesList.length,
           ))
         ],
